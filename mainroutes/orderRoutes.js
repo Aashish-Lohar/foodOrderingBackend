@@ -31,10 +31,26 @@ router.post('/orders/create',asyncHandler(
 
 router.get('/orders/newOrderFromCurrentUser',asyncHandler(
     async(req,res)=>{
-        const order = await orderModel.findOne({user:req.user.id, status:orderStatus.NEW});
+        const order = await getNewOrderForCurrentUser(req);
         if(order) res.send(order);
         else res.status(400).send();
     }
 ))
 
+router.post('/pay',asyncHandler(async(req,res)=>{
+    const order = await getNewOrderForCurrentUser(req);
+    if(!order){
+        res.status(400).send('Order not found');
+        return;
+    }
+    order.paymentId = paymentId;
+    order.status = orderStatus.PAYED;
+    await order.save();
+    res.send(order._id);
+}))
+
 module.exports= router;
+
+async function getNewOrderForCurrentUser(req) {
+    return await orderModel.findOne({ user: req.user.id, status: orderStatus.NEW });
+}

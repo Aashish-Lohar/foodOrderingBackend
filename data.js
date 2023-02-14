@@ -1,7 +1,7 @@
 const Food=[
     {
       id:1,
-      price:15,
+      price:150,
       name:'Pizza Pepperini',
       favorite:false,
       star:4.5,
@@ -12,7 +12,7 @@ const Food=[
     },
     {
       id:2,
-      price:10,
+      price:100,
       name:'Meat Ball',
       favorite:true,
       star:4.5,
@@ -23,7 +23,7 @@ const Food=[
     },
     {
       id:3,
-      price:20,
+      price:200,
       name:'Burger',
       favorite:false,
       star:2.5,
@@ -34,7 +34,7 @@ const Food=[
     },
     {
       id:4,
-      price:10,
+      price:100,
       name:'French Fries',
       favorite:false,
       star:4.5,
@@ -45,7 +45,7 @@ const Food=[
     },
     {
       id:5,
-      price:10,
+      price:100,
       name:'Vegetable Soup',
       favorite:false,
       star:4.5,
@@ -56,7 +56,7 @@ const Food=[
     },
     {
       id:6,
-      price:15,
+      price:150,
       name:'Thin Crust Pizza',
       favorite:false,
       star:4.5,
@@ -67,7 +67,7 @@ const Food=[
     },
     {
       id:7,
-      price:20,
+      price:200,
       name:'Double Decker Burger',
       favorite:false,
       star:4.5,
@@ -78,7 +78,7 @@ const Food=[
     },
     {
       id:8,
-      price:10,
+      price:100,
       name:'Vegi Pizza',
       favorite:false,
       star:4.5,

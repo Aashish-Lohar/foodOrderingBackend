@@ -2,11 +2,10 @@ const express = require("express");
 const router = express.Router();
 const asyncHandler=require('express-async-handler');
 app = express();
-const stripe = require('stripe')('sk_test_51MMW2PSARWQdi33XLmVEx64xS8hfJyBpdPc6TShnDiVDFZkvRGFFSyJ1BozvRB7juT92UelqJ3mc7iNi2u5oOXUd00XaQxqQgS');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 router.post('/payment',async(req,res,next)=>{
     try {
-        console.log(req.body.items[0].price);
         const session = await stripe.checkout.sessions.create({
             line_items: req.body.items.map((item)=>({
                 price_data: {
@@ -15,7 +14,7 @@ router.post('/payment',async(req,res,next)=>{
                         name: item.food.name,
                         images: []
                     }, 
-                    unit_amount: item.price*100
+                    unit_amount: item.food.price*100
                 },
                 quantity: item.quantity,
             })),

@@ -9,7 +9,6 @@ router.use(auth);
 router.post('/orders/create',asyncHandler(
     async(req,res)=>{
         const requestOrder = req.body;
-        // console.log('request order',requestOrder)
 
         if(requestOrder.items.length<=0){
             res.status(400).send('Cart is empty');
@@ -26,6 +25,13 @@ router.post('/orders/create',asyncHandler(
         // console.log('order',newOrder)
         res.send(newOrder);
 
+    }
+))
+
+router.get('/orders',asyncHandler(
+    async(req,res)=>{
+        const orders = await orderModel.find({ user: req.user.id});
+        res.status(200).json(orders);
     }
 ))
 

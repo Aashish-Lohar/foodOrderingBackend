@@ -22,7 +22,8 @@ const orderSchema = new mongoose.Schema({
     totalPrice:{type:Number, required:true},
     items:{type:[orderItemSchema], required:true},
     status:{type:String,default:orderStatus.NEW},
-    user:{type:mongoose.Schema.Types.ObjectId, required:true}
+    user:{type:mongoose.Schema.Types.ObjectId, required:true},
+    checkout_id:{type:String}
 },{
     timestamps:true,
     toJSON: {virtuals:true},

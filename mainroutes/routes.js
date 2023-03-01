@@ -3,10 +3,8 @@ require('dotenv').config();
 const express=require('express');
 const router=express.Router();
 const asyncHandler = require('express-async-handler')
-const users=require('../models/schema');
 const jwt = require('jsonwebtoken');
 const bcrypt= require('bcryptjs');
-const checkauth= require('../middleware/checkAuth');
 const userModel= require('../models/userModel');
 
 router.get("/users/seed",async(req,res)=>{
@@ -74,15 +72,35 @@ const generateTokenResponse = (user)=>{
 }
 
 // get user 
-router.get('/profile',checkauth,(req,res)=>{
-    const userId= req.userData.userId;
-    // console.log('userId',userId);
-    users.findById(userId).exec().then((result)=>{
-        res.json({success:true,data:result});
-        // console.log('result',result);
-    }).catch((err)=>{
-        res.json({success:false,message:"Server error"})
-    })
-})
+// router.get('/profile',checkauth,(req,res)=>{
+//     const userId= req.userData.userId;
+//     // console.log('userId',userId);
+//     users.findById(userId).exec().then((result)=>{
+//         res.json({success:true,data:result});
+//         // console.log('result',result);
+//     }).catch((err)=>{
+//         res.json({success:false,message:"Server error"})
+//     })
+// })
+
+//store cartData
+router.post('/user/:id',asyncHandler(
+    async(req,res)=>{
+        const response = await userModel.findOneAndUpdate(
+            { _id: req.params.id },
+            { $set: { cart: req.body} },
+            { new: true}
+          )
+          console.log(response.items);
+          res.send(response);
+        }));
+
+router.get('/cart',asyncHandler(
+    async(req,res)=>{
+        const email = req.body.email;
+        let userCart= await userModel.findOne({email});
+        res.json(userCart.cart);
+    }
+))
 
 module.exports=router;

@@ -22,7 +22,8 @@ const userSchema=new mongoose.Schema(
         city:{type:String,required:true},
         state:{type:String,required:true},
         pincode:{type:Number,min:6,required:true},
-        isAdmin:{type:Boolean,required:true}
+        isAdmin:{type:Boolean,required:true},
+        cart:{type:Object}
     },
     {
         toJSON:{virtuals:true},

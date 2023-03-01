@@ -46,13 +46,20 @@ router.post('/users/login',asyncHandler(async (req,res)=>{
     try {
         console.log('before',req.body);
         const {email,password}=req.body;
-        let user= await userModel.findOne({email,password});
-        if(user){
-            res.json(generateTokenResponse(user.toObject()))
-        }
-        else{
-            res.status(400).send("credentials is not valid");
-        }    
+        let user= await userModel.findOne({email});
+        const decryptedPassword = await bcrypt.compare(req.body.password, user.password, function(err, result) {
+            if(result){
+                console.log('result',result);
+                res.json(generateTokenResponse(user.toObject()))
+            }
+            else{
+                console.log('err',err);
+                res.status(400).send("credentials is not valid");
+            }   
+            // console.log('err',err);
+            // console.log('result',result);
+          })
+         
     } catch (error) {
         console.log(error);
         res.status(400).send(error);
@@ -70,18 +77,6 @@ const generateTokenResponse = (user)=>{
     user.token=token;
     return user;
 }
-
-// get user 
-// router.get('/profile',checkauth,(req,res)=>{
-//     const userId= req.userData.userId;
-//     // console.log('userId',userId);
-//     users.findById(userId).exec().then((result)=>{
-//         res.json({success:true,data:result});
-//         // console.log('result',result);
-//     }).catch((err)=>{
-//         res.json({success:false,message:"Server error"})
-//     })
-// })
 
 //store cartData
 router.post('/user/:id',asyncHandler(

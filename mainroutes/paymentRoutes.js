@@ -21,8 +21,8 @@ router.post('/payment',async(req,res,next)=>{
                 quantity: item.quantity,
             })),
             mode:"payment",
-            success_url:"http://localhost:4200/payment-success",
-            cancel_url:"http://localhost:4200/payment-failed", 
+            success_url:"https://gorana-food-house.vercel.app/payment-success",
+            cancel_url:"https://gorana-food-house.vercel.app/payment-failed", 
           });
           let order = await orderModel.findOne({ items: req.body.items, status: orderStatus.NEW });
           if(order){
